@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import { Platform } from 'react-native';
+import { Platform, AsyncStorage } from 'react-native';
 import AddDeck from './AddDeck';
 import Decks from './Decks';
 import { connect } from 'react-redux';
 import { getDecks } from '../../redux/actions';
+import { _getDecks } from '../../api';
+import HistoryDeck from './HistoryDeck';
 
 const tabBarOptions = {
   style: {
@@ -35,7 +37,9 @@ const Tab =
 class Navigation extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(getDecks());
+    _getDecks().then(results => {
+      dispatch(getDecks(results));
+    });
   }
   render() {
     return (
@@ -46,7 +50,7 @@ class Navigation extends Component {
         tabBarOptions={tabBarOptions}
         screenOptions={screenOptions}
       >
-        <Tab.Screen name="Decks" component={Decks} />
+        <Tab.Screen name="Decks" component={HistoryDeck} />
         <Tab.Screen name="Add Deck" component={AddDeck} />
       </Tab.Navigator>
     );

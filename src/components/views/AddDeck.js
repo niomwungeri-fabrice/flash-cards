@@ -1,11 +1,64 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-export default class componentName extends Component {
+import { View } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
+import { addDeck } from '../../redux/actions/index';
+import { connect } from 'react-redux';
+import { CommonActions } from '@react-navigation/native';
+import { _addDeck } from '../../api';
+class AddDeck extends Component {
+  state = {
+    text: '',
+    isDisabled: true
+  };
+  handleInputChange = text => {
+    this.setState({
+      text,
+      isDisabled: false
+    });
+  };
+  handleCreateDeck = () => {
+    const { dispatch } = this.props;
+    const { text } = this.state;
+    dispatch(addDeck(text));
+    _addDeck(text);
+    this.toHome();
+  };
+  toHome = () => {
+    const { navigation } = this.props;
+    return navigation.dispatch(CommonActions.navigate({ name: 'Decks' }));
+  };
   render() {
+    const { isDisabled, text } = this.state;
     return (
-      <View>
-        <Text>Add decks</Text>
+      <View style={styles.formContainer}>
+        <TextInput
+          style={styles.space}
+          label="Name of the Deck"
+          value={text}
+          onChangeText={text =>
+            this.setState({ text, isDisabled: text ? false : true })
+          }
+        />
+        <Button
+          style={styles.space}
+          mode="contained"
+          disabled={isDisabled}
+          onPress={this.handleCreateDeck}
+        >
+          Create Deck
+        </Button>
       </View>
     );
   }
 }
+const styles = {
+  formContainer: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  space: {
+    margin: 5
+  }
+};
+
+export default connect()(AddDeck);

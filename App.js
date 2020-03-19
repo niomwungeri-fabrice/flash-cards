@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import decks from './src/redux/reducers';
 import { rootMiddleware } from './src/redux/middleware/index';
-// import 'antd-mobile/dist/antd-mobile.css';
 export default class App extends Component {
   render() {
     return (
