@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 import AddDeck from './AddDeck';
 import Decks from './Decks';
+import { connect } from 'react-redux';
+import { getDecks } from '../../redux/actions';
 
 const tabBarOptions = {
   style: {
@@ -30,17 +32,25 @@ const Tab =
   Platform.OS === 'ios'
     ? createBottomTabNavigator()
     : createMaterialTopTabNavigator();
-export const Navigation = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="Decks"
-      shifting={true}
-      sceneAnimationEnabled={false}
-      tabBarOptions={tabBarOptions}
-      screenOptions={screenOptions}
-    >
-      <Tab.Screen name="Decks" component={Decks} />
-      <Tab.Screen name="Add Deck" component={AddDeck} />
-    </Tab.Navigator>
-  );
-};
+class Navigation extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(getDecks());
+  }
+  render() {
+    return (
+      <Tab.Navigator
+        initialRouteName="Decks"
+        shifting={true}
+        sceneAnimationEnabled={false}
+        tabBarOptions={tabBarOptions}
+        screenOptions={screenOptions}
+      >
+        <Tab.Screen name="Decks" component={Decks} />
+        <Tab.Screen name="Add Deck" component={AddDeck} />
+      </Tab.Navigator>
+    );
+  }
+}
+
+export default connect()(Navigation);
