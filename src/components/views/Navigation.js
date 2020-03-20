@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import { Platform, AsyncStorage } from 'react-native';
+import { Platform } from 'react-native';
 import AddDeck from './AddDeck';
-import Decks from './Decks';
 import { connect } from 'react-redux';
 import { getDecks } from '../../redux/actions';
 import { _getDecks } from '../../api';
 import HistoryDeck from './HistoryDeck';
+import Decks from './Decks';
 
 const tabBarOptions = {
   style: {

@@ -13,6 +13,22 @@ export const _addDeck = async deck => {
   );
 };
 
+export const _addCard = (question, answer, deck) => {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
+    const data = JSON.parse(results);
+    data[deck].questions.push({ question, answer });
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+  });
+};
+
+export const _deleteDeck = deck => {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
+    const data = JSON.parse(results);
+    delete data[deck];
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+  });
+};
+
 export const _getDecks = async () => {
   try {
     const results = await AsyncStorage.getItem(DECKS_STORAGE_KEY);

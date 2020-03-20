@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-paper';
 
 class Deck extends Component {
+  state = {
+    deleted: false
+  };
+
   handleStartQuiz = () => {
     alert('handle quiz');
-    // this.props.navigation.navigate('Quiz');
+    // this.props.navigation.navigate('Quiz', { screen: 'Deck' });
   };
   handleAddCard = () => {
     alert('handle add card');
     // this.props.navigation.navigate('AddCard');
   };
+
   render() {
     const { deck } = this.props;
     return (

@@ -10,18 +10,14 @@ class AddDeck extends Component {
     text: '',
     isDisabled: true
   };
-  handleInputChange = text => {
-    this.setState({
-      text,
-      isDisabled: false
-    });
-  };
   handleCreateDeck = () => {
     const { dispatch } = this.props;
     const { text } = this.state;
-    dispatch(addDeck(text));
-    _addDeck(text);
+    _addDeck(text).then(() => {
+      dispatch(addDeck(text));
+    });
     this.toHome();
+    this.setState({ text: '' });
   };
   toHome = () => {
     const { navigation } = this.props;
