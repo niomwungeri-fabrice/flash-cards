@@ -1,12 +1,79 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { Button, Badge } from 'react-native-paper';
 
-export default class Quiz extends Component {
+class Quiz extends Component {
   render() {
+    const { deck } = this.props;
+    if (deck.questions.length === 0) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            alignContent: 'center',
+            justifyContent: 'center',
+            margin: 10
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 22,
+              textAlign: 'center',
+              marginBottom: 10
+            }}
+          >
+            Sorry, you can not take quiz your deck is empty. click bellow to add
+            cards
+          </Text>
+          <Button
+            mode="contained"
+            onPress={() => this.props.navigation.navigate('Deck')}
+          >
+            Add Cards
+          </Button>
+        </View>
+      );
+    }
     return (
-      <View>
-        <Text>Hello Quiz</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center'
+        }}
+      >
+        <Badge>{deck.questions.length}</Badge>
+        <Button
+          style={{
+            backgroundColor: 'green',
+            margin: 5
+          }}
+          mode="contained"
+          onPress={() => alert('Correct')}
+        >
+          Correct
+        </Button>
+        <Button
+          style={{
+            backgroundColor: 'red',
+            margin: 5
+          }}
+          mode="contained"
+          onPress={() => alert('Incorrect')}
+        >
+          Incorrect
+        </Button>
       </View>
     );
   }
 }
+
+const mapStateToProps = (state, { route }) => {
+  const { deckKey } = route.params;
+  return {
+    deck: state[deckKey]
+  };
+};
+
+export default connect(mapStateToProps)(Quiz);

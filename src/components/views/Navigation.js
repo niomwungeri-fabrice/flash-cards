@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { getDecks } from '../../redux/actions';
 import { _getDecks } from '../../api';
 import HistoryDeck from './HistoryDeck';
-import Decks from './Decks';
 
 const tabBarOptions = {
   style: {
