@@ -13,9 +13,9 @@ class AddCard extends Component {
   };
   handleAddCard = () => {
     const { question, answer } = this.state;
-    const { dispatch } = this.props;
-    _addCard(question, answer, 'Fresh').then(() => {
-      dispatch(addCard(question, answer, 'Fresh'));
+    const { dispatch, deck } = this.props;
+    _addCard(question, answer, deck).then(() => {
+      dispatch(addCard(question, answer, deck));
     });
     this.setState({ question: '', answer: '' });
   };
@@ -68,5 +68,10 @@ const styles = {
     margin: 5
   }
 };
-
-export default connect()(AddCard);
+const mapStateToProps = (state, { route }) => {
+  const { deckKey } = route.params;
+  return {
+    deck: state[deckKey]
+  };
+};
+export default connect(mapStateToProps)(AddCard);

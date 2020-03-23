@@ -8,8 +8,6 @@ import { connect } from 'react-redux';
 import { getDecks } from '../../redux/actions';
 import { _getDecks } from '../../api';
 import HistoryDeck from './HistoryDeck';
-import Decks from './Decks';
-import Quiz from './Quiz';
 
 const tabBarOptions = {
   style: {
@@ -51,7 +49,7 @@ class Navigation extends Component {
         tabBarOptions={tabBarOptions}
         screenOptions={screenOptions}
       >
-        <Tab.Screen name="Decks" component={Quiz} />
+        <Tab.Screen name="Decks" component={HistoryDeck} />
         <Tab.Screen name="Add Deck" component={AddDeck} />
       </Tab.Navigator>
     );

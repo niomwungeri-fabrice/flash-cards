@@ -5,8 +5,8 @@ import { Button, Badge } from 'react-native-paper';
 
 class Quiz extends Component {
   render() {
-    const { decks } = this.props;
-    if (decks && decks['Fresh'].questions.length === 0) {
+    const { deck } = this.props;
+    if (deck.questions.length === 0) {
       return (
         <View
           style={{
@@ -43,7 +43,7 @@ class Quiz extends Component {
           justifyContent: 'center'
         }}
       >
-        <Badge>{decks['Fresh'].questions.length}</Badge>
+        <Badge>{deck.questions.length}</Badge>
         <Button
           style={{
             backgroundColor: 'green',
@@ -69,9 +69,10 @@ class Quiz extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, { route }) => {
+  const { deckKey } = route.params;
   return {
-    decks: state
+    deck: state[deckKey]
   };
 };
 

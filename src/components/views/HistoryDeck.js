@@ -2,6 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Decks from './Decks';
 import Deck from './Deck';
+import Quiz from './Quiz';
+import AddCard from './AddCard';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +21,8 @@ const HistoryDeck = () => {
           };
         }}
       />
+      <Stack.Screen name="AddCard" component={AddCard} />
+      <Stack.Screen name="Quiz" component={Quiz} />
     </Stack.Navigator>
   );
 };
