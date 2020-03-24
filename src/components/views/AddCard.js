@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { addCard } from '../../redux/actions';
 import { _addCard } from '../../api';
@@ -59,7 +59,7 @@ class AddCard extends Component {
     );
   }
 }
-const styles = {
+const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: 'center'
@@ -67,7 +67,7 @@ const styles = {
   space: {
     margin: 5
   }
-};
+});
 const mapStateToProps = (state, { route }) => {
   const { deckKey } = route.params;
   return {

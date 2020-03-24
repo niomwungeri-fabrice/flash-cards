@@ -5,8 +5,6 @@ import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 import AddDeck from './AddDeck';
 import { connect } from 'react-redux';
-import { getDecks } from '../../redux/actions';
-import { _getDecks } from '../../api';
 import HistoryDeck from './HistoryDeck';
 
 const tabBarOptions = {
@@ -34,12 +32,6 @@ const Tab =
     ? createBottomTabNavigator()
     : createMaterialTopTabNavigator();
 class Navigation extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    _getDecks().then(results => {
-      dispatch(getDecks(results));
-    });
-  }
   render() {
     return (
       <Tab.Navigator
