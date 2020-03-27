@@ -35,9 +35,6 @@ class Decks extends Component {
           onPress: () => {
             return _deleteDeck(deckKey).then(() => {
               dispatch(deleteDeck(deckKey));
-              this.setState({
-                searchResults: Object.keys(this.props.decks)
-              });
             });
           }
         }
@@ -58,7 +55,6 @@ class Decks extends Component {
   render() {
     const { decks } = this.props;
     const { firstQuery, searchResults } = this.state;
-    console.log(this.state.searchResults);
     return (
       <ScrollView stickyHeaderIndices={[0]}>
         <Searchbar

@@ -18,6 +18,7 @@ class AddCard extends Component {
       dispatch(addCard(question, answer, deck));
     });
     this.setState({ question: '', answer: '' });
+    this.props.navigation.navigate('Deck');
   };
   render() {
     const { isDisabled, question, answer } = this.state;

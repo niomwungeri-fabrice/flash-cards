@@ -16,7 +16,7 @@ export const _addDeck = async deck => {
 export const _addCard = (question, answer, deck) => {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
     const data = JSON.parse(results);
-    data[deck].questions.push({ question, answer });
+    data[deck.title].questions.push({ question, answer });
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
   });
 };

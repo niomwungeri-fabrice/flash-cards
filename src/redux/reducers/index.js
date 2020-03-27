@@ -15,9 +15,9 @@ const decks = (state = {}, action) => {
     case ADD_CARD:
       return {
         ...state,
-        [action.payload.deck]: {
-          ...state[action.payload.deck],
-          questions: state[action.payload.deck].questions.concat([
+        [action.payload.deck.title]: {
+          ...state[action.payload.deck.title],
+          questions: state[action.payload.deck.title].questions.concat([
             { question: action.payload.question, answer: action.payload.answer }
           ])
         }
