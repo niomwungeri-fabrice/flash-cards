@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 export const DECKS_STORAGE_KEY = 'FlashCards:decks';
+// import update from 'immutability-helper';
 
 export const _addDeck = async deck => {
   return await AsyncStorage.mergeItem(
@@ -13,10 +14,16 @@ export const _addDeck = async deck => {
   );
 };
 
-export const _addCard = (question, answer, deck) => {
+export const _addCard = (qid, question, answer, deck) => {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
     const data = JSON.parse(results);
-    data[deck.title].questions.push({ question, answer });
+    data[deck.title].questions.push({
+      qid,
+      question,
+      answer,
+      isCorrect: false,
+      isAnswered: false
+    });
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
   });
 };
@@ -25,6 +32,29 @@ export const _deleteDeck = deck => {
   return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
     const data = JSON.parse(results);
     delete data[deck];
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+  });
+};
+
+export const _answerQuestion = (qid, title, isAnswered, isCorrect) => {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
+    let data = JSON.parse(results);
+    data = {
+      ...data,
+      [title]: {
+        ...data[title],
+        questions: data[title].questions.map(question =>
+          question.qid === qid
+            ? {
+                ...question,
+                isCorrect: isCorrect,
+                isAnswered: isAnswered
+              }
+            : question
+        )
+      }
+    };
+
     AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
   });
 };

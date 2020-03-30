@@ -4,6 +4,7 @@ import { TextInput, Button } from 'react-native-paper';
 import { addCard } from '../../redux/actions';
 import { _addCard } from '../../api';
 import { connect } from 'react-redux';
+import { generateUID } from '../../utils/helpers';
 
 class AddCard extends Component {
   state = {
@@ -14,8 +15,9 @@ class AddCard extends Component {
   handleAddCard = () => {
     const { question, answer } = this.state;
     const { dispatch, deck } = this.props;
-    _addCard(question, answer, deck).then(() => {
-      dispatch(addCard(question, answer, deck));
+    const questionId = generateUID();
+    _addCard(questionId, question, answer, deck).then(() => {
+      dispatch(addCard(questionId, question, answer, deck));
     });
     this.setState({ question: '', answer: '' });
     this.props.navigation.navigate('Deck');

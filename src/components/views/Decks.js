@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Text, ScrollView, View, Alert, StyleSheet } from 'react-native';
+import {
+  Text,
+  ScrollView,
+  View,
+  Alert,
+  StyleSheet,
+  AsyncStorage
+} from 'react-native';
 import { connect } from 'react-redux';
 import { Card, Title, Paragraph, Searchbar } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -12,6 +19,7 @@ class Decks extends Component {
   };
   componentDidMount() {
     const { dispatch } = this.props;
+    // AsyncStorage.clear();
     _getDecks().then(results => {
       dispatch(getDecks(results));
       this.setState({
@@ -44,6 +52,7 @@ class Decks extends Component {
   };
   handleSearch = query => {
     const { decks } = this.props;
+    console.log(decks);
     this.setState({
       firstQuery: query,
       searchResults: query
