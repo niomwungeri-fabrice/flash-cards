@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { Button, Card, Title } from 'react-native-paper';
-import { _answerQuestion } from '../../api';
-import { answerQuestion } from '../../redux/actions';
+import { Button, Card, Title, ProgressBar, Colors } from 'react-native-paper';
+import { _answerQuestion, _resetQuiz } from '../../api';
+import { answerQuestion, resetQuiz } from '../../redux/actions';
 
 class Quiz extends Component {
   state = {
@@ -16,18 +16,23 @@ class Quiz extends Component {
       dispatch(answerQuestion(qid, title, isAnswered, isCorrect));
     });
   };
+
+  handleResetQuiz = title => {
+    const { dispatch } = this.props;
+    _resetQuiz(title).then(() => {
+      dispatch(resetQuiz(title));
+    });
+  };
   render() {
-    const { deck, deckKey } = this.props;
-
-    const correct = deck.questions.filter(
-      question => question.isCorrect === true
-    ).length;
-
-    const allAnswered =
-      deck.questions.filter(question => question.isAnswered === true).length !==
-      0;
-
-    if (deck.questions.length === 0) {
+    const {
+      deck,
+      deckKey,
+      totalQuestions,
+      correct,
+      answered,
+      allAnswered
+    } = this.props;
+    if (totalQuestions === 0) {
       return (
         <View style={styles.emptyDeckContainer}>
           <Text style={styles.emptyDeck}>
@@ -46,27 +51,56 @@ class Quiz extends Component {
       );
     }
     return (
-      <ScrollView>
-        <Text
+      <ScrollView stickyHeaderIndices={[0]}>
+        <Card
           style={{
             margin: 5
           }}
         >
-          {correct}/{deck.questions.length}{' '}
-          {correct === deck.questions.length
-            ? 'quiz completed 👏🏿'
-            : 'remaining'}
-        </Text>
-        {allAnswered && (
-          <Button
-            style={{
-              margin: 5
-            }}
-            mode="outlined"
-          >
-            Reset Quiz
-          </Button>
-        )}
+          <Card.Content>
+            <Text
+              style={{
+                marginBottom: 5,
+
+                textAlign: 'center'
+              }}
+            >
+              {answered}/{totalQuestions}{' '}
+              {answered === totalQuestions ? 'quiz completed 👏🏿' : 'remaining'}
+            </Text>
+            <Text>
+              <ProgressBar
+                style={{
+                  marginTop: 5,
+                  marginBottom: 5,
+                  marginLeft: 1,
+                  marginRight: 1
+                }}
+                progress={correct / totalQuestions}
+                color={'black'}
+              />
+            </Text>
+            <Text
+              style={{
+                textAlign: 'center'
+              }}
+            >
+              {Math.round((correct / totalQuestions) * 100)} %
+            </Text>
+
+            {allAnswered && (
+              <Button
+                onPress={() => this.handleResetQuiz(deckKey)}
+                style={{
+                  marginTop: 5
+                }}
+                mode="outlined"
+              >
+                Reset Quiz
+              </Button>
+            )}
+          </Card.Content>
+        </Card>
         {deck.questions.map((question, index) => (
           <Card
             style={{
@@ -106,6 +140,7 @@ class Quiz extends Component {
                 }}
               >
                 <Button
+                  disabled={question.isAnswered ? true : false}
                   style={styles.correctBtn}
                   mode="contained"
                   onPress={() =>
@@ -115,6 +150,7 @@ class Quiz extends Component {
                   Correct
                 </Button>
                 <Button
+                  disabled={question.isAnswered ? true : false}
                   style={styles.incorrectBtn}
                   mode="contained"
                   onPress={() =>
@@ -172,7 +208,19 @@ const mapStateToProps = (state, { route }) => {
   const { deckKey } = route.params;
   return {
     deckKey,
-    deck: state[deckKey]
+    deck: state[deckKey],
+    correct: state[deckKey].questions.filter(
+      question => question.isCorrect === true
+    ).length,
+
+    answered: state[deckKey].questions.filter(
+      question => question.isAnswered === true
+    ).length,
+
+    allAnswered:
+      state[deckKey].questions.filter(question => question.isAnswered === true)
+        .length !== 0,
+    totalQuestions: state[deckKey].questions.length
   };
 };
 

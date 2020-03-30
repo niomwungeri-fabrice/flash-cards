@@ -3,6 +3,7 @@ export const ADD_DECK = 'ADD_DECK';
 export const ADD_CARD = 'ADD_CARD';
 export const DELETE_DECK = 'DELETE_DECK';
 export const ANSWER = 'ANSWER';
+export const RESET_QUIZ = 'RESET_QUIZ';
 
 export const getDecks = decks => {
   return {
@@ -46,5 +47,11 @@ export const answerQuestion = (qid, title, isAnswered, isCorrect) => {
       isAnswered,
       isCorrect
     }
+  };
+};
+export const resetQuiz = title => {
+  return {
+    type: RESET_QUIZ,
+    title
   };
 };

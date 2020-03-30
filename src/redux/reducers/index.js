@@ -1,6 +1,11 @@
-import { GET_DATA, ADD_DECK, ADD_CARD, DELETE_DECK, ANSWER } from '../actions';
-import { generateUID } from '../../api';
-import update from 'immutability-helper';
+import {
+  GET_DATA,
+  ADD_DECK,
+  ADD_CARD,
+  DELETE_DECK,
+  ANSWER,
+  RESET_QUIZ
+} from '../actions';
 
 const decks = (state = {}, action) => {
   switch (action.type) {
@@ -47,6 +52,18 @@ const decks = (state = {}, action) => {
                 }
               : question
           )
+        }
+      };
+    case RESET_QUIZ:
+      return {
+        ...state,
+        [action.title]: {
+          ...state[action.title],
+          questions: state[action.title].questions.map(question => ({
+            ...question,
+            isCorrect: false,
+            isAnswered: false
+          }))
         }
       };
     case DELETE_DECK:

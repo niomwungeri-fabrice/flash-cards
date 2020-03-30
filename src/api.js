@@ -59,6 +59,25 @@ export const _answerQuestion = (qid, title, isAnswered, isCorrect) => {
   });
 };
 
+export const _resetQuiz = title => {
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY).then(results => {
+    let data = JSON.parse(results);
+    data = {
+      ...data,
+      [title]: {
+        ...data[title],
+        questions: data[title].questions.map(question => ({
+          ...question,
+          isCorrect: false,
+          isAnswered: false
+        }))
+      }
+    };
+
+    AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
+  });
+};
+
 export const _getDecks = async () => {
   try {
     const results = await AsyncStorage.getItem(DECKS_STORAGE_KEY);
