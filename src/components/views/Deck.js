@@ -23,16 +23,7 @@ class Deck extends Component {
     return (
       <View style={styles.cardContainer}>
         <Text style={{ fontSize: 44, textAlign: 'center' }}>{deck.title}</Text>
-        <Text
-          style={{
-            fontSize: 22,
-            textAlign: 'center',
-            marginTop: 20,
-            marginBottom: 20
-          }}
-        >
-          {deck.questions.length} Cards
-        </Text>
+        <Text style={styles.input}>{deck.questions.length} Cards</Text>
         <Button
           onPress={this.handleAddCard}
           style={styles.btn}
@@ -62,7 +53,13 @@ const mapStateToProps = (decks, { route }) => {
 
 const styles = StyleSheet.create({
   cardContainer: { margin: 10, flex: 1, justifyContent: 'center' },
-  btn: { marginTop: 10 }
+  btn: { marginTop: 10 },
+  input: {
+    fontSize: 22,
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 20
+  }
 });
 
 export default connect(mapStateToProps)(Deck);

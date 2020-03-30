@@ -3346,6 +3346,13 @@ immediate@^3.2.2:
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.2.3.tgz#d140fa8f614659bd6541233097ddaac25cdd991c"
   integrity sha1-0UD6j2FGWb1lQSMwl92qwlzdmRw=
 
+immutability-helper@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.0.1.tgz#4f609c5afbf8d78cb297970e8af2fba8b0eda1d6"
+  integrity sha512-U92ROQQt7XkIwrdqCByUI118TQM1hXdKnRQpvKeA0HRyGSnJipu9IWHe4UD8zCN00O8UnQjQzPCgZ1CC3yBzHA==
+  dependencies:
+    invariant "^2.2.4"
+
 import-fresh@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-2.0.0.tgz#d81355c15612d386c61f9ddd3922d4304822a546"
@@ -5371,6 +5378,14 @@ range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
+
+react-addons-update@^15.6.2:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/react-addons-update/-/react-addons-update-15.6.2.tgz#e53753c5b34887974510c882d7fb075851d5e504"
+  integrity sha1-5TdTxbNIh5dFEMiC1/sHWFHV5QQ=
+  dependencies:
+    fbjs "^0.8.9"
+    object-assign "^4.1.0"
 
 react-devtools-core@^3.6.3:
   version "3.6.3"

@@ -2,6 +2,8 @@ export const GET_DATA = 'GET_DATA';
 export const ADD_DECK = 'ADD_DECK';
 export const ADD_CARD = 'ADD_CARD';
 export const DELETE_DECK = 'DELETE_DECK';
+export const ANSWER = 'ANSWER';
+export const RESET_QUIZ = 'RESET_QUIZ';
 
 export const getDecks = decks => {
   return {
@@ -24,13 +26,32 @@ export const deleteDeck = deck => {
   };
 };
 
-export const addCard = (question, answer, deck) => {
+export const addCard = (qid, question, answer, deck) => {
   return {
     type: ADD_CARD,
     payload: {
+      qid,
       question,
       answer,
       deck
     }
+  };
+};
+
+export const answerQuestion = (qid, title, isAnswered, isCorrect) => {
+  return {
+    type: ANSWER,
+    payload: {
+      qid,
+      title,
+      isAnswered,
+      isCorrect
+    }
+  };
+};
+export const resetQuiz = title => {
+  return {
+    type: RESET_QUIZ,
+    title
   };
 };

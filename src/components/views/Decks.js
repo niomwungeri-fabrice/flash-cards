@@ -1,18 +1,36 @@
 import React, { Component } from 'react';
-import { Text, ScrollView, View, Alert } from 'react-native';
+import {
+  Text,
+  ScrollView,
+  View,
+  Alert,
+  StyleSheet,
+  AsyncStorage
+} from 'react-native';
 import { connect } from 'react-redux';
 import { Card, Title, Paragraph, Searchbar } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-import { _deleteDeck } from '../../api';
-import { deleteDeck } from '../../redux/actions';
+import { _deleteDeck, _getDecks } from '../../api';
+import { deleteDeck, getDecks } from '../../redux/actions';
 class Decks extends Component {
   state = {
     firstQuery: '',
     searchResults: []
   };
+  componentDidMount() {
+    const { dispatch } = this.props;
+    // AsyncStorage.clear();
+    _getDecks().then(results => {
+      dispatch(getDecks(results));
+      this.setState({
+        searchResults: Object.keys(results)
+      });
+    });
+  }
+
   handleDelete = deckKey => {
     const { dispatch } = this.props;
-    Alert.alert(
+    return Alert.alert(
       'Are you sure you want to delete this deck?',
       'This action is not reversible',
       [
@@ -23,7 +41,7 @@ class Decks extends Component {
         {
           text: 'Yes, I am sure',
           onPress: () => {
-            _deleteDeck(deckKey).then(() => {
+            return _deleteDeck(deckKey).then(() => {
               dispatch(deleteDeck(deckKey));
             });
           }
@@ -34,6 +52,7 @@ class Decks extends Component {
   };
   handleSearch = query => {
     const { decks } = this.props;
+    console.log(decks);
     this.setState({
       firstQuery: query,
       searchResults: query
@@ -41,12 +60,10 @@ class Decks extends Component {
         : Object.keys(decks)
     });
   };
+
   render() {
-    const { decks, loading } = this.props;
+    const { decks } = this.props;
     const { firstQuery, searchResults } = this.state;
-    if (loading === true) {
-      return <Text>loading...</Text>;
-    }
     return (
       <ScrollView stickyHeaderIndices={[0]}>
         <Searchbar
@@ -63,13 +80,7 @@ class Decks extends Component {
             style={{ margin: 5 }}
             key={key}
           >
-            <Card.Content
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between'
-              }}
-            >
+            <Card.Content style={styles.cardContainer}>
               <View>
                 <Title>{decks[key].title}</Title>
                 <Paragraph>
@@ -98,10 +109,18 @@ class Decks extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
+});
+
 const mapStateToProps = state => {
   return {
-    decks: state,
-    loading: state === undefined
+    decks: state
   };
 };
 

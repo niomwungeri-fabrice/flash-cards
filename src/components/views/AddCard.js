@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { addCard } from '../../redux/actions';
 import { _addCard } from '../../api';
 import { connect } from 'react-redux';
+import { generateUID } from '../../utils/helpers';
 
 class AddCard extends Component {
   state = {
@@ -14,10 +15,12 @@ class AddCard extends Component {
   handleAddCard = () => {
     const { question, answer } = this.state;
     const { dispatch, deck } = this.props;
-    _addCard(question, answer, deck).then(() => {
-      dispatch(addCard(question, answer, deck));
+    const questionId = generateUID();
+    _addCard(questionId, question, answer, deck).then(() => {
+      dispatch(addCard(questionId, question, answer, deck));
     });
     this.setState({ question: '', answer: '' });
+    this.props.navigation.navigate('Deck');
   };
   render() {
     const { isDisabled, question, answer } = this.state;
@@ -59,7 +62,7 @@ class AddCard extends Component {
     );
   }
 }
-const styles = {
+const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: 'center'
@@ -67,7 +70,7 @@ const styles = {
   space: {
     margin: 5
   }
-};
+});
 const mapStateToProps = (state, { route }) => {
   const { deckKey } = route.params;
   return {

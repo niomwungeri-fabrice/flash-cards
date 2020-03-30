@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { addDeck } from '../../redux/actions/index';
 import { connect } from 'react-redux';
@@ -47,7 +47,7 @@ class AddDeck extends Component {
     );
   }
 }
-const styles = {
+const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: 'center'
@@ -55,6 +55,6 @@ const styles = {
   space: {
     margin: 5
   }
-};
+});
 
 export default connect()(AddDeck);

@@ -4,6 +4,8 @@ import Decks from './Decks';
 import Deck from './Deck';
 import Quiz from './Quiz';
 import AddCard from './AddCard';
+import { _getDecks } from '../../api';
+import { connect } from 'react-redux';
 
 const Stack = createStackNavigator();
 
@@ -27,4 +29,4 @@ const HistoryDeck = () => {
   );
 };
 
-export default HistoryDeck;
+export default connect()(HistoryDeck);
