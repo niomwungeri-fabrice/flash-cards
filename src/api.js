@@ -1,6 +1,5 @@
 import { AsyncStorage } from 'react-native';
 export const DECKS_STORAGE_KEY = 'FlashCards:decks';
-// import update from 'immutability-helper';
 
 export const _addDeck = async deck => {
   return await AsyncStorage.mergeItem(
