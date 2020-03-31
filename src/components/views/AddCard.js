@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { addCard } from '../../redux/actions';
 import { _addCard } from '../../api';
@@ -25,7 +25,7 @@ class AddCard extends Component {
   render() {
     const { isDisabled, question, answer } = this.state;
     return (
-      <View style={styles.formContainer}>
+      <KeyboardAvoidingView style={styles.formContainer} behavior="padding">
         <TextInput
           style={styles.space}
           label="Question"
@@ -58,14 +58,14 @@ class AddCard extends Component {
         >
           Add Card
         </Button>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
 const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
-    justifyContent: 'center'
+    marginTop: 15
   },
   space: {
     margin: 5

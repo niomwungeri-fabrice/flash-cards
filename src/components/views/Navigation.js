@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import HistoryDeck from './HistoryDeck';
 
 const tabBarOptions = {
+  showIcon: true,
   style: {
     height: 80,
     shadowColor: 'rgba(0, 0, 0, 0.24)',
@@ -22,9 +23,9 @@ const tabBarOptions = {
 const screenOptions = ({ route }) => ({
   tabBarIcon: ({ color, size }) =>
     route.name === 'Add Deck' ? (
-      <FontAwesome name="plus-square" size={size} color={color} />
+      <FontAwesome name="plus-square" size={28} color={color} />
     ) : (
-      <Ionicons name="ios-list-box" color={color} size={size} />
+      <Ionicons name="ios-list-box" size={28} color={color} />
     )
 });
 const Tab =

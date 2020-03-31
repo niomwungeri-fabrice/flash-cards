@@ -1,30 +1,15 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  ScrollView,
-  View,
-  Alert,
-  StyleSheet,
-  AsyncStorage
-} from 'react-native';
+import { Text, ScrollView, View, Alert, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { Card, Title, Paragraph, Searchbar } from 'react-native-paper';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import { _deleteDeck, _getDecks } from '../../api';
 import { deleteDeck, getDecks } from '../../redux/actions';
 class Decks extends Component {
-  state = {
-    firstQuery: '',
-    searchResults: []
-  };
   componentDidMount() {
     const { dispatch } = this.props;
-    // AsyncStorage.clear();
     _getDecks().then(results => {
       dispatch(getDecks(results));
-      this.setState({
-        searchResults: Object.keys(results)
-      });
     });
   }
 
@@ -50,29 +35,12 @@ class Decks extends Component {
       { cancelable: false }
     );
   };
-  handleSearch = query => {
-    const { decks } = this.props;
-    console.log(decks);
-    this.setState({
-      firstQuery: query,
-      searchResults: query
-        ? Object.keys(decks).filter(deck => deck.includes(query))
-        : Object.keys(decks)
-    });
-  };
 
   render() {
     const { decks } = this.props;
-    const { firstQuery, searchResults } = this.state;
     return (
       <ScrollView stickyHeaderIndices={[0]}>
-        <Searchbar
-          style={{ margin: 5 }}
-          placeholder="Search"
-          onChangeText={query => this.handleSearch(query)}
-          value={firstQuery}
-        />
-        {searchResults.map(key => (
+        {Object.keys(decks).map(key => (
           <Card
             onPress={() =>
               this.props.navigation.navigate('Deck', { deckKey: key })
