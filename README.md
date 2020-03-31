@@ -99,3 +99,8 @@ _getDecks();
 - [React Native](https://reactnative.dev/)
 - [React/Redux](https://redux.js.org/)
 - [React Native Paper](https://reactnativepaper.com/)
+
+## Reference:
+
+- [Udacity](https://classroom.udacity.com/nanodegrees/nd019-ent/dashboard/overview)
+- [StackOverFlow](https://stackoverflow.com/)
