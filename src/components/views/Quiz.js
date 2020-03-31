@@ -66,20 +66,21 @@ class Quiz extends Component {
               }}
             >
               {answered}/{totalQuestions}{' '}
-              {answered === totalQuestions ? 'quiz completed 👏🏿' : 'remaining'}
+              {answered === totalQuestions
+                ? 'you have completed the quiz!'
+                : 'remaining'}
             </Text>
-            <Text>
-              <ProgressBar
-                style={{
-                  marginTop: 5,
-                  marginBottom: 5,
-                  marginLeft: 1,
-                  marginRight: 1
-                }}
-                progress={correct / totalQuestions}
-                color={'black'}
-              />
-            </Text>
+            <ProgressBar
+              style={{
+                marginTop: 5,
+                marginBottom: 5,
+                marginLeft: 1,
+                marginRight: 1
+              }}
+              progress={correct / totalQuestions}
+              color={'black'}
+            />
+
             <Text
               style={{
                 textAlign: 'center'
