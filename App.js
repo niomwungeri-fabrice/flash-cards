@@ -8,7 +8,11 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import decks from './src/redux/reducers';
 import { rootMiddleware } from './src/redux/middleware/index';
+import { setLocalNotification } from './src/utils/helpers';
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
   render() {
     return (
       <Provider store={createStore(decks, rootMiddleware)}>

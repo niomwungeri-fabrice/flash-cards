@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
-import { Button, Card, Title, ProgressBar, Colors } from 'react-native-paper';
+import { Button, Card, Title, ProgressBar } from 'react-native-paper';
 import { _answerQuestion, _resetQuiz } from '../../api';
 import { answerQuestion, resetQuiz } from '../../redux/actions';
-
+import { NOTIFICATION_KEY } from '../../utils/helpers';
 class Quiz extends Component {
   state = {
     isAnswer: false,
@@ -14,6 +14,7 @@ class Quiz extends Component {
     const { dispatch } = this.props;
     _answerQuestion(qid, title, isAnswered, isCorrect).then(() => {
       dispatch(answerQuestion(qid, title, isAnswered, isCorrect));
+      AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
     });
   };
 
@@ -21,6 +22,7 @@ class Quiz extends Component {
     const { dispatch } = this.props;
     _resetQuiz(title).then(() => {
       dispatch(resetQuiz(title));
+      AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(false));
     });
   };
   render() {
